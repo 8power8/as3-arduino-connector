@@ -13,6 +13,7 @@ Instruct your IDE to include the ANE that you downloaded from the Downloads tab.
 
 Next, add a new ArduinoConnector instance. You will need to pass the COM port that the Arduino is connected to, along with the baud rate to the connect() function (as3Glue uses 57600, most Arduino samples use 9600). You can get a list of valid COM ports for your operating system by taking in the getComPorts() array. Also, add a function that will "dispose" or clean up the connection when you are finished (if you do not do this, the AIR runtime may crash when your app closes).
 
+```
 public var arduino:ArduinoConnector;
                         
 public function initApp():void
@@ -25,6 +26,7 @@ protected function closeApp(event:Event):void
 {
         arduino.dispose();                              
 }
+```
 Reading Data
 When ArduinoConnector gets data from the serial port, it will fire an event that has the "socketData" signature. When the event is fired, you can check the bytesAvailable variable to see how much data is in the buffer, and you can use one of the following functions to get data :
 
