@@ -27,26 +27,35 @@ protected function closeApp(event:Event):void
         arduino.dispose();                              
 }
 ```
+
 Reading Data
 When ArduinoConnector gets data from the serial port, it will fire an event that has the "socketData" signature. When the event is fired, you can check the bytesAvailable variable to see how much data is in the buffer, and you can use one of the following functions to get data :
 
+```
 public function readBytesAsArray():Array
 public function readBytesAsString():String
 public function readBytesAsByteArray():ByteArray
 public function readByte():uint
+```
+
 The buffer mirrors the UART, and holds at most 4046 bytes (4k) worth of data. All the above functions will clear the buffer, with the exception of readByte(), which will only return the top byte from the buffer (FIFO order).
 Sending Data
 Before sending data, make sure the port was successfully opened by checking the 'portOpen' variable. If the port is not open, the write functions will fail and return false. You can use the following functions to send data to the serial port :
 
+```
 public function writeByte(byte:uint):Boolean
 public function writeString(stringToSend:String):Boolean
 public function writeBytes(bytesToSend:ByteArray):Boolean
+```
+
 The functions will return TRUE if the data was successfully sent, and FALSE if there was an error sending the data. The data is sent in another thread, but is virtually synchronous. There is no send buffer, so there is no need to 'flush' the data.
 Using with as3Glue
 as3Glue is the most popular library for people to deal with Arduinos. It allows the developer to load the Firmata code onto their Arduino and control all the pins using AS3 rather than the embedded C that the Arduino uses natively.
 
 Download either the SWC or Source Code from the Downloads section of this project for a patched version of as3Glue. This patched version has the exact same interfaces as v20, with a notable exception of the constructor. When you instantiate a new "Arduino" object, replace the IP address and port with the COM port and baud rate. For example :
 
+```
 public var myArduino:Arduino = new Arduino("COM10", 57600);
+```
 
 You can find out more about as3Glue at http://code.google.com/p/as3Glue
